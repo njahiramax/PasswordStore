@@ -1,37 +1,50 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity 0.8.24; 
 
-/*
- * @author not-so-secure-dev
- * @title PasswordStore
- * @notice This contract allows you to store a private password that others won't be able to see. 
- * You can update your password at any time.
- */
 contract PasswordStore {
     error PasswordStore__NotOwner();
+/*//////////////////////////////////////////////////////////////                   
+          STATE VARIABLES
+    //////////////////////////////////////////////////////////////*/
+
 
     address private s_owner;
+    // @audit the s_password variable is not actully pricate!, this is not a secure place to store your password.
     string private s_password;
+    /*//////////////////////////////////////////////////////////////                            
+            EVENTS
+    //////////////////////////////////////////////////////////////*/
 
-    event SetNetPassword();
+    event SetNewPassword(); 
 
     constructor() {
         s_owner = msg.sender;
     }
 
     /*
-     * @notice This function allows only the owner to set a new password.
-     * @param newPassword The new password to set.
+     * @notice Allows the owner to set a new password.
+     * @param newPassword The new password to store.
      */
+
+
+     //Q can a none owner set a password?
+     //Q should a non-owner be able to set a passord?
+     //@audit any user can set a password
+     // missing access control
     function setPassword(string memory newPassword) external {
+        if (msg.sender != s_owner) {
+            revert PasswordStore__NotOwner();
+        }
         s_password = newPassword;
-        emit SetNetPassword();
+        emit SetNewPassword();
     }
 
     /*
-     * @notice This allows only the owner to retrieve the password.
-     * @param newPassword The new password to set.
+     * @notice Allows the owner to retrieve the stored password.
+     
      */
+     // theres no new password parameter
+
     function getPassword() external view returns (string memory) {
         if (msg.sender != s_owner) {
             revert PasswordStore__NotOwner();

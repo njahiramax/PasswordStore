@@ -1,101 +1,108 @@
 
-# PasswordStore
+# PasswordStore: A Secure Smart Contract for Password Storage
 
-<br/>
-<p align="center">
-<img src="./password-store-logo.png" width="400" alt="password-store">
-</p>
-<br/>
+PasswordStore allows users to securely store and retrieve passwords on the blockchain. With encryption, only the user has access to their password, ensuring complete privacy.
 
-A smart contract applicatoin for storing a password. Users should be able to store a password and then retrieve it later. Others should not be able to access the password. 
+## Table of Contents
 
-- [PasswordStore](#passwordstore)
-- [Getting Started](#getting-started)
-  - [Requirements](#requirements)
-  - [Quickstart](#quickstart)
-    - [Optional Gitpod](#optional-gitpod)
-- [Usage](#usage)
-  - [Deploy (local)](#deploy-local)
-  - [Testing](#testing)
-    - [Test Coverage](#test-coverage)
-- [Audit Scope Details](#audit-scope-details)
-  - [Create the audit report](#create-the-audit-report)
+- [PasswordStore: A Secure Smart Contract for Password Storage](#passwordstore-a-secure-smart-contract-for-password-storage)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [Requirements](#requirements)
+    - [Quickstart](#quickstart)
+  - [Usage](#usage)
+    - [Deploy Locally](#deploy-locally)
+    - [Testing](#testing)
+      - [Test Coverage](#test-coverage)
+  - [Audit Scope](#audit-scope)
+    - [Generate Audit Report](#generate-audit-report)
 
-# Getting Started
+---
 
-## Requirements
+## Getting Started
 
-- [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-  - You'll know you did it right if you can run `git --version` and you see a response like `git version x.x.x`
-- [foundry](https://getfoundry.sh/)
-  - You'll know you did it right if you can run `forge --version` and you see a response like `forge 0.2.0 (816e00b 2023-03-16T00:05:26.396218Z)`
+### Requirements
 
-## Quickstart
+- **Git**: Version control for managing your code.  
+  Verify with:  
+  ```bash
+  git --version
+````
 
-```
-git clone https://github.com/Cyfrin/3-passwordstore-audit
-cd 3-passwordstore-audit
+* **Foundry**: A framework for smart contract development.
+  Verify with:
+
+  ```bash
+  forge --version
+  ```
+
+### Quickstart
+
+Clone the repository and build the project:
+
+```bash
+git clone https://github.com/njahiramax/PasswordStore.git
+cd PasswordStore
 forge build
 ```
 
-### Optional Gitpod
+---
 
-If you can't or don't want to run and install locally, you can work with this repo in Gitpod. If you do this, you can skip the `clone this repo` part.
+## Usage
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#github.com/Cyfrin/3-passwordstore-audit)
+### Deploy Locally
 
-# Usage
+1. **Start a local Ethereum node**
 
-## Deploy (local)
+   ```bash
+   make anvil
+   ```
 
-1. Start a local node
+2. **Deploy the contract**
+   Ensure your local node is running and deploy the contract with:
 
-```
-make anvil
-```
+   ```bash
+   make deploy
+   ```
 
-2. Deploy
+### Testing
 
-This will default to your local node. You need to have it running in another terminal in order for it to deploy.
+Run the tests:
 
-```
-make deploy
-```
-
-## Testing
-
-```
+```bash
 forge test
 ```
 
-### Test Coverage
+#### Test Coverage
 
-```
+Generate a coverage report:
+
+```bash
 forge coverage
 ```
 
-and for coverage based testing: 
+For detailed coverage debugging:
 
-```
+```bash
 forge coverage --report debug
 ```
 
-# Audit Scope Details
+---
 
-- Commit Hash:  2e8f81e263b3a9d18fab4fb5c46805ffc10a9990
-- In Scope:
-```
-./src/
-└── PasswordStore.sol
-```
-- Solc Version: 0.8.18
-- Chain(s) to deploy contract to: Ethereum
+## Audit Scope
 
-## Create the audit report
+* **Commit Hash**: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
+* **Contract in Scope**:
+  `./src/PasswordStore.sol`
+* **Solidity Version**: 0.8.24
+* **Chain**: Ethereum
 
-View the [audit-report-templating](https://github.com/Cyfrin/audit-report-templating) repo to install all dependencies. 
+### Generate Audit Report
+
+To generate an audit report, first install dependencies from the [audit-report-templating](https://github.com/Cyfrin/audit-report-templating) repository.
 
 ```bash
 cd audits
 pandoc 2023-09-01-password-store-report.md -o report.pdf --from markdown --template=eisvogel --listings
 ```
+

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity 0.8.24;
 
 import {Test, console} from "forge-std/Test.sol";
 import {PasswordStore} from "../src/PasswordStore.sol";
@@ -26,8 +26,19 @@ contract PasswordStoreTest is Test {
 
     function test_non_owner_reading_password_reverts() public {
         vm.startPrank(address(1));
-
         vm.expectRevert(PasswordStore.PasswordStore__NotOwner.selector);
         passwordStore.getPassword();
+    }
+
+    function test_anyone_can_set_password() public {
+        // using a random address
+        address randomAddress = vm.addr(1);
+        vm.assume(randomAddress != owner);
+        vm.prank(randomAddress);
+        string memory expectedPassword = "myNewPassword";
+        passwordStore.setPassword(expectedPassword);
+        string memory actualPassword = passwordStore.getPassword();
+
+        assertEq(actualPassword, expectedPassword);
     }
 }
